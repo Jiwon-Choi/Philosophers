@@ -50,9 +50,12 @@ int	run(t_info *info)
 {
 	pthread_t	tid;
 
-	if (pthread_create(&tid, NULL, monitor_must_eat, info))
-		return (EXIT_FAILURE);
-	pthread_detach(tid);
+	if (info->must_eat > -1)
+	{
+		if (pthread_create(&tid, NULL, monitor_must_eat, info))
+			return (EXIT_FAILURE);
+		pthread_detach(tid);
+	}
 	init_time(info);
 	if (run_philo(info, 1) || run_philo(info, 0))
 		return (EXIT_FAILURE);
